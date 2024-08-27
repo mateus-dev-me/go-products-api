@@ -1,0 +1,29 @@
+services:
+  products-api:
+    container_name: products-api
+    image: go-products-image
+    build: .
+    env_file:
+        - .env 
+    ports:
+      - "8000:8000"
+    environment:
+      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_DB: ${DATABASE_NAME}
+    depends_on:
+      - products-db
+  products-db:
+    image: postgres:latest
+    container_name: products-db
+    environment:
+      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_DB: ${DATABASE_NAME}
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata: {}
