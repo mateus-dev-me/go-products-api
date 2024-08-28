@@ -1,46 +1,89 @@
 # Documentação do Projeto
 
-## Visão Geral
+![Go Versions](https://img.shields.io/badge/go-v1.23.0-blue) ![License](https://img.shields.io/badge/license-MIT-green)
 
-Este projeto é uma aplicação de backend em Go que gerencia um catálogo de produtos. A arquitetura é baseada em Clean Architecture, utilizando pacotes para isolar as responsabilidades e promover uma estrutura organizada e modular.
+> A Simple API built using Clean Architecture.
 
-## Estrutura do Projeto
+## **Table of Contents**
+1. [Project Overview](#project-overview)
+2. [Project Structure](#project-structure)
+3. [Installation](#installation)
+4. [Usage](#usage)
 
-A estrutura do projeto é organizada da seguinte forma:
+## **Project Overview**
+
+This project is a web application designed to provide an API for managing products in a system. The project is structured based on Clean Architecture, promoting a modular and maintainable organization that facilitates upkeep and expansion.
+
+## **Project Structure**
+
+The project structure is organized as follows:
 
 ```
 .
 │
 ├── cmd/
-│   └── main.go                    # Ponto de entrada da aplicação
+│   └── main.go
 │
 ├── internal/
 │   ├── domain/
-│   │   ├── product.go             # Definições das entidades e interfaces de repositório
-│   │   └── product_repository.go  # Interface do repositório
-│   │
 │   ├── infrastructure/
-│   │   ├── db/
-│   │   │   ├── db.go              # Função ConnectDB e configurações do banco de dados
-│   │   │   └── product_repository_db.go # Implementação concreta do repositório
-│   │   └── config.go              # Carregamento de variáveis de ambiente e configurações
-│   │
 │   └── use_cases/
-│       ├── get_all_products.go     # Caso de uso para obter todos os produtos
-│       ├── get_by_id_product.go    # Caso de uso para obter um produto por ID
-│       ├── save_product.go         # Caso de uso para salvar um novo produto
-│       ├── update_product.go       # Caso de uso para atualizar um produto existente
-│       └── delete_product.go       # Caso de uso para excluir um produto
 │
 ├── interfaces/
 │   └── api/
 │       └── controllers/
-│           └── product_controller.go # Controladores HTTP
 │
 ├── tests/
+│   ├── use_cases/
+│   ├── infrastructure/
+│   └── controllers/
 │
 ├── migrations/
+│
+├── docs/
 │
 ├── go.mod
 └── go.sum
 ```
+
+
+## **Installation**
+
+### **Prerequisites:**
+
+- **Go** (version 1.23.0 or higher)
+- **Docker** (for container setup)
+
+1. Clone the repository:
+
+    ```bash
+    git clone https://github.com/mateus-dev-me/ama-api.git
+    cd ama-api
+    ```
+
+2. Configure environment variables:
+
+    Create a `.env` file based on the `.env.example` file and configure your database credentials and parameters.
+
+3. Install dependencies:
+
+    ```bash
+    go mod tidy
+    ```
+
+4. Run database migrations:
+
+    ```bash
+    go generate
+    ```
+
+## **Usage**
+
+### **Start the Server:**
+
+```bash
+go run ./cmd/main.go
+```
+
+The API will be available at http://localhost:8080/api/v1
+
