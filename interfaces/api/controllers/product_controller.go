@@ -11,7 +11,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type productController struct {
+type ProductController struct {
 	GetAll  *use_cases.GetAllProductsUseCase
 	GetByID *use_cases.GetProductByIDUseCase
 	Save    *use_cases.SaveProductUseCase
@@ -19,8 +19,8 @@ type productController struct {
 	Delete  *use_cases.DeleteProductUseCase
 }
 
-func NewProductController(repo db.ProductRepositoryDB) *productController {
-	return &productController{
+func NewProductController(repo db.ProductRepositoryDB) *ProductController {
+	return &ProductController{
 		GetAll:  use_cases.NewGetAllProductsUseCase(repo),
 		GetByID: use_cases.NewGetByIDProductUseCase(repo),
 		Save:    use_cases.NewSaveProductUseCase(repo),
@@ -29,7 +29,7 @@ func NewProductController(repo db.ProductRepositoryDB) *productController {
 	}
 }
 
-func (c *productController) GetAllHandler(ctx *gin.Context) {
+func (c *ProductController) GetAllHandler(ctx *gin.Context) {
 	products, err := c.GetAll.Execute()
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, "something went wrong")
@@ -40,7 +40,7 @@ func (c *productController) GetAllHandler(ctx *gin.Context) {
 	})
 }
 
-func (c *productController) SaveHandler(ctx *gin.Context) {
+func (c *ProductController) SaveHandler(ctx *gin.Context) {
 	var product domain.Product
 
 	err := ctx.BindJSON(&product)
@@ -58,7 +58,7 @@ func (c *productController) SaveHandler(ctx *gin.Context) {
 	ctx.JSON(http.StatusCreated, insertedProduct)
 }
 
-func (c *productController) GetByIDHandler(ctx *gin.Context) {
+func (c *ProductController) GetByIDHandler(ctx *gin.Context) {
 	productId := ctx.Param("id")
 	if productId == "" {
 		response := domain.Response{
@@ -82,7 +82,7 @@ func (c *productController) GetByIDHandler(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, product)
 }
 
-func (c *productController) UpdateHandler(ctx *gin.Context) {
+func (c *ProductController) UpdateHandler(ctx *gin.Context) {
 	productId := ctx.Param("id")
 	if productId == "" {
 		response := domain.Response{
@@ -116,7 +116,7 @@ func (c *productController) UpdateHandler(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, "Product updated successfully")
 }
 
-func (c *productController) DeleteHandler(ctx *gin.Context) {
+func (c *ProductController) DeleteHandler(ctx *gin.Context) {
 	productId := ctx.Param("id")
 	if productId == "" {
 		response := domain.Response{
